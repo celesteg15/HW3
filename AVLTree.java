@@ -1,6 +1,6 @@
 
 /*
- * *** YOUR NAME GOES HERE / YOUR SECTION NUMBER ***
+ * *** Celeste Gonzalez / COMP272 002 ***
  *
  * This java file is a Java object implementing simple AVL Tree.
  * You are to complete the deleteElement method.
@@ -361,7 +361,55 @@ class LUC_AVLTree {
          * code for each. You can also look at the method InsertElement, as it has do
          * do many of the same things as this method.
          */
+            if(node = null) {
+                    return null;
+            }
 
+
+        // scenario 1: 
+        if (value < node.value) {
+            node.leftChild = deleteElement(value, node.leftChild);
+            int bf = getBalanceFactor(node);
+            if (Math.abs(bf) >1){
+                if (value < node.leftChild.value) {
+                    node = LLRotation(node);
+                }
+                else {
+                    node = LRRotation(node)
+                }
+            }
+        }
+        
+        
+        if (value > node.value) {
+            node.rightChild = deleteElement(value, node.rightChild);
+        }
+            /*1. leaf node - simpliest case, just return null (which removes node)
+     *    2. interior node with only left subtree below it (node gets replaced 
+     *       with left subtree)
+     *    3. interior node with only right subtree below it (node gets replaced
+     *       with right subtree)
+     *    4. interior node with both a left and right subtree below it. In this
+     *       scenario, it gets the inorder successor node (aka, the smallest 
+     *       value node in the right subtree, this is accomplished by using 
+     *       method minValueNode()). Once found, it then copies the inorder
+     *       successor node's value to this node, which for all purposes deletes 
+     *       the node. Finally, it needs to delete that inorder successor node 
+     *       from the right subtree.
+     *
+     *  When deleting a node, the heights need to be recalculated, including on 
+     *  all ancestor nodes to the root. And for each node, if the bf is > 1, a 
+     *  rotation is needed.
+     *
+     *  So, scenario 1 from above, we simply remove the leaf node and 
+     *  recalculates the heights of each of its ancestors back to the root. 
+     * 
+     *  On scenarios 2 and 3, we simply pull up the appropriate subtree to 
+     *  replace the deleted node and recalculate the height for this node and 
+     *  each of its ancestors back to the root.
+     *
+     *  In scenario 4, the routine pulls up (and deletes) the "Inorder 
+     *  Successor" node on its right subtree. It will be a leaf node.  */
         return node;
     }
 
