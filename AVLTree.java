@@ -371,20 +371,33 @@ class LUC_AVLTree {
             node.leftChild = deleteElement(value, node.leftChild);
             int bf = getBalanceFactor(node);
             if (Math.abs(bf) >1){
-                if (value < node.leftChild.value) {
+                if (value < node.leftChild.value) 
                     node = LLRotation(node);
-                }
-                else {
-                    node = LRRotation(node)
-                }
+                else 
+                    node = LRRotation(node);
+                
             }
         }
-        
-        
-        if (value > node.value) {
-            node.rightChild = deleteElement(value, node.rightChild);
+         else if (value > node.value){
+            node.rightChild = deleteElement(value, node.leftChild);
+            int bf = getBalanceFactor(node);
+            if (Math.abs(bf) > 1){
+                    if (value > node.rightChild.value){
+                        node = RRRotation(node);
+                    } else {
+                        node = RLRotation(node);
+                    }
+            }
+        } else {
+            node = null;
         }
-            /*1. leaf node - simpliest case, just return null (which removes node)
+
+        node.height = (getMaxHeight(getHeight(node.leftchild), getHeight(node.rightChild)))+1;
+        return node;
+            
+        
+        
+     /*1. leaf node - simpliest case, just return null (which removes node)
      *    2. interior node with only left subtree below it (node gets replaced 
      *       with left subtree)
      *    3. interior node with only right subtree below it (node gets replaced
