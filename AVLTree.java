@@ -363,35 +363,36 @@ class LUC_AVLTree {
          */
 
         // scenario 1: 
-        if (value < node.value) {
+        if (value < node.value) { //recursive case -> traversing the tree to find the node to delete
             node.leftChild = deleteElement(value, node.leftChild);
         } else if (value > node.value){
             node.rightChild = deleteElement(value, node.rightChild);
-        } else {
+        } else { //cases 1&2
             if (node.leftChild == null || node.rightChild == null){
                 Node oneChild = (node.leftChild != null) ? node.leftChild : node.rightChild;
 
-                if(oneChild == null) {
+                if(oneChild == null) { //no child
                     oneChild = node;
                     node = null;
                 } else {
                     //one child
-                    node = oneChild;
+                    node = oneChild; // if there is one child
                 }
             } else{
-                //scenario #3
-                Node oneChild = minValueNode(node.rightChild);
-                node.value = oneChild.value;
+                //scenario #3: node has two children
+                Node oneChild = minValueNode(node.rightChild); //find inorder successor
+                node.value = oneChild.value; //copy inorder successor's value to this node
                 node.rightChild = deleteElement(oneChild.value, node.rightChild);
             }
         }
-        if(node == null) {
-            return node;
+        if(node == null) { //base case 
+            return node; 
         }
         node.height = (getMaxHeight(getHeight(node.leftChild), getHeight(node.rightChild)))+1;
+        // update height of the current node
             
         int balancef = getBalanceFactor(node);        
-
+        // check balance factor and rebalance if necessary 
         if (balancef > 1 && getBalanceFactor(node.leftChild)>=0) {
             return LLRotation(node);
         } //LL case
@@ -434,7 +435,7 @@ class LUC_AVLTree {
      *
      *  In scenario 4, the routine pulls up (and deletes) the "Inorder 
      *  Successor" node on its right subtree. It will be a leaf node.  */
-        return node;
+        return node; //return the potentially modified node
     }
 
 
