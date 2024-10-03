@@ -59,8 +59,12 @@ public class TreeProblems {
   public boolean treesEqual(Map<Integer, String> tree1,Map<Integer, String> tree2 ) {
 
     // INSERT CODE HERE
+    if (tree1 != tree2) {
+      return false;
+    } else {
+        return tree1.equals(tree2);
 
-    return false;
+      }
 
   }
 
