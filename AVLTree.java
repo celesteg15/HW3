@@ -381,7 +381,7 @@ class LUC_AVLTree {
             } else{
                 //scenario #3
                 Node oneChild = minValueNode(node.rightChild);
-                node.value = temp.value;
+                node.value = oneChild.value;
                 node.rightChild = deleteElement(oneChild.value, node.rightChild);
             }
         }
