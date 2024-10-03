@@ -361,42 +361,53 @@ class LUC_AVLTree {
          * code for each. You can also look at the method InsertElement, as it has do
          * do many of the same things as this method.
          */
-            if(node = null) {
-                    return null;
-            }
-
 
         // scenario 1: 
         if (value < node.value) {
             node.leftChild = deleteElement(value, node.leftChild);
-            int bf = getBalanceFactor(node);
-            if (Math.abs(bf) >1){
-                if (value < node.leftChild.value) 
-                    node = LLRotation(node);
-                else 
-                    node = LRRotation(node);
-                
-            }
-        }
-         else if (value > node.value){
-            node.rightChild = deleteElement(value, node.leftChild);
-            int bf = getBalanceFactor(node);
-            if (Math.abs(bf) > 1){
-                    if (value > node.rightChild.value){
-                        node = RRRotation(node);
-                    } else {
-                        node = RLRotation(node);
-                    }
-            }
+        } else if (value > node.value){
+            node.rightChild = deleteElement(value, node.rightChild);
         } else {
-            node = null;
-        }
+            if (node.leftChild == null || node.rightChild == null){
+                Node oneChild = (node.leftChild != null) ? node.leftChild : node.rightChild;
 
-        node.height = (getMaxHeight(getHeight(node.leftchild), getHeight(node.rightChild)))+1;
-        return node;
+                if(oneChild == null) {
+                    oneChild = node;
+                    node = null;
+                } else {
+                    //one child
+                    node = oneChild;
+                }
+            } else{
+                //scenario #3
+                Node oneChild = minValueNode(node.rightChild);
+                node.value = temp.value;
+                node.rightChild = deleteElement(oneChild.value, node.rightChild);
+            }
+        }
+        if(node == null) {
+            return node;
+        }
+        node.height = (getMaxHeight(getHeight(node.leftChild), getHeight(node.rightChild)))+1;
             
+        int balancef = getBalanceFactor(node);        
+
+        if (balancef > 1 && getBalanceFactor(node.leftChild)>=0) {
+            return LLRotation(node);
+        } //LL case
+        if (balancef >1 && getBalanceFactor(node.leftChild)< 0) {
+            return LRRotation(node);
+        } // LR case
         
-        
+
+        if (balancef < -1 && getBalanceFactor(node.rightChild)<=0){
+            return RRRotation(node);
+        } //RR case
+
+        if (balancef < -1 && getBalanceFactor(node.rightChild) > 0) {
+            return RLRotation(node);
+        } // RL Case
+
      /*1. leaf node - simpliest case, just return null (which removes node)
      *    2. interior node with only left subtree below it (node gets replaced 
      *       with left subtree)
