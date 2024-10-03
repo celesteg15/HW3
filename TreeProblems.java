@@ -26,11 +26,11 @@ public class TreeProblems {
     // This can be done numerous ways, but once such will only that
     // *several* lines of code. Hint: create two temporary TreeSets and utilize the
     // methods retainAll(), addAll(), and removeAll(). But in the end, get something to work.
-    Set<Integer> xset = new TreeSet<>(setB);
-    xset.removeAll(setA);
-    setA.removeAll(setB);
-    setA.addAll(xset);
-    return setA;
+    Set<Integer> xset = new TreeSet<>(setB);  // new treeset w/ all elemnts from setb
+    xset.removeAll(setA); // remove repeated elements also in setA
+    setA.removeAll(setB); // remove repeated elements also in setB
+    setA.addAll(xset); // add the remaining elements from the temporary set to setA
+    return setA; // return only the changed elements 
   }
 
 
@@ -45,7 +45,7 @@ public class TreeProblems {
 
     // INSERT CODE HERE.
     treeMap.entrySet().removeIf(entry -> entry.getKey() % 2 == 0);
-    return;
+    return; //removing even keys
   }
 
 
@@ -59,13 +59,7 @@ public class TreeProblems {
   public boolean treesEqual(Map<Integer, String> tree1,Map<Integer, String> tree2 ) {
 
     // INSERT CODE HERE
-    if (tree1 != tree2) {
-      return false;
-    } else {
-        return tree1.equals(tree2);
-
-      }
-
+    return tree1.equals(tree2); // this will compare both maps in the equals method
   }
 
 } // end treeProblems class
