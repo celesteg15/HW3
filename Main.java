@@ -232,8 +232,7 @@ public class Main {
          *
          * Automated tests for testing the Collections Framework Library
          * classes.
-         *
-         */
+         */ 
 
         /*****************************************************************
          *
